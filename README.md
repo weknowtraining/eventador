@@ -18,7 +18,23 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    def thing(&block)
+      if ok?
+        block.callback(:ok, data)
+      else
+        block.callback(:error)
+      end
+    end
+
+    thing do |on|
+      on.ok do |payload|
+        ...
+      end
+
+      on.error do
+        ...
+      end
+    end
 
 ## Contributing
 
