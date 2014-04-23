@@ -1,6 +1,6 @@
 # Eventador
 
-TODO: Write a gem description
+Simple callbacks/lightweight events on procs.
 
 ## Installation
 
