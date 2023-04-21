@@ -36,6 +36,13 @@ Or install it yourself as:
       end
     end
 
+## Developing
+
+Running tests
+```
+$ rake test
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/yardstick/eventador/fork )

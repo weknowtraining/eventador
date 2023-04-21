@@ -29,7 +29,7 @@ describe Proc do
     cba(a) do |on|
       on.test do |arg|
         @flag.notify
-        arg.must_equal(a)
+        _(arg).must_equal(a)
       end
     end
   end
@@ -56,6 +56,24 @@ describe Proc do
         a + 1
       end
     end
-    ret.must_equal(2)
+    _(ret).must_equal(2)
+  end
+
+  def cbm(a, &block)
+    block.callback(:add, a)
+
+    block.callback(:block1, a) +
+      block.callback(:block2, a) +
+      block.callback(:block3, a)
+  end
+
+  it 'should allow many callbacks in sequence' do
+    ret = cbm(1) do |on|
+      on.add { @flag.notify }
+      on.block1 { |a| a * 1 }
+      on.block2 { |a| a * 2 }
+      on.block3 { |a| a * 3 }
+    end
+    _(ret).must_equal(6)
   end
 end
