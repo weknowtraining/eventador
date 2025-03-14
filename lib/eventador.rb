@@ -36,7 +36,7 @@ module Eventador
     ret.result
   end
 
-  def capture(callable)
+  def capture(callable, &default)
     @captures ||= ::Hash.new do |h, method_name|
       h[method_name] = Class.new(Capture) do
         define_method(method_name) do |&block|
@@ -48,7 +48,7 @@ module Eventador
     end
     ret = @captures[callable].new
     call(ret)
-    ret.block
+    ret.block || default
   end
 end
 

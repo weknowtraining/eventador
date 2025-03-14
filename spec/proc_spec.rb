@@ -96,4 +96,20 @@ describe Proc do
     end
     _(ret).must_equal(3)
   end
+
+  def bdb(&block)
+    add = block.capture(:add) do
+      "default #{a + b}"
+    end
+    s = AB.new(1, 2)
+    s.define_singleton_method(:add, &add)
+    s.add
+  end
+
+  it 'should allow a default when capturing' do
+    ret = bdb do |on|
+      on.not_add { a + b }
+    end
+    _(ret).must_equal('default 3')
+  end
 end
