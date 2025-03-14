@@ -77,3 +77,23 @@ describe Proc do
     _(ret).must_equal(6)
   end
 end
+
+describe Proc do
+  AB = Struct.new(:a, :b)
+
+  def bcb(&block)
+    add = block.capture(:add)
+    a = 1
+    b = 2
+    s = AB.new(a, b)
+    s.define_singleton_method(:add, &add)
+    s.add
+  end
+
+  it 'should allow getting the block' do
+    ret = bcb do |on|
+      on.add { a + b }
+    end
+    _(ret).must_equal(3)
+  end
+end
